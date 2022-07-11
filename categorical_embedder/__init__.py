@@ -1,1 +1,1 @@
-from categorical_embedder.categorical_embedder import CategoricalEmbedder
+from categorical_embedder.categorical_embedder import CategoricalEmbedder, umap_plot_cat_emb

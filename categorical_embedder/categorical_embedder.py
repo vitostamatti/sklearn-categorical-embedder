@@ -6,7 +6,7 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.neural_network import MLPClassifier
 import numpy as np
 import pandas as pd
-
+import matplotlib.pyplot as plt
 
 class CategoricalEmbedder(TransformerMixin, BaseEstimator):
 
@@ -105,3 +105,44 @@ class CategoricalEmbedder(TransformerMixin, BaseEstimator):
         x_emb = x_emb.reshape(x_emb.shape[0], x_emb.shape[1]*x_emb.shape[2])
 
         return x_emb
+
+
+
+
+def umap_plot_cat_emb(cat_emb:CategoricalEmbedder, n_neighbors=10, annotation=True):
+    import umap
+    
+    def get_cmap(n, name='viridis'):
+        '''Returns a function that maps each index in 0, 1, ..., n-1 to a distinct 
+        RGB color; the keyword argument name must be a standard mpl colormap name.'''
+        return plt.cm.get_cmap(name, n)
+        
+    mapper = umap.UMAP(n_neighbors=n_neighbors).fit(cat_emb.emb_)
+
+    emb_umap = mapper.transform(cat_emb.emb_)
+
+    cmap = get_cmap(len(cat_emb.feature_names_in_))
+
+    plt.figure(figsize=(15,15))
+    if getattr(cat_emb, "feature_names_in_",None) is not None:
+        features = cat_emb.feature_names_in_
+    else:
+        features = [f"feature_{i}" for i in range(len(cat_emb.cardinalities_))]
+
+    for idx, feature in enumerate(features):
+        if idx == len(cat_emb.offset_)-1:
+            feature_emb = emb_umap[cat_emb.offset_[idx]:]
+        else:
+            feature_emb = emb_umap[cat_emb.offset_[idx]:cat_emb.offset_[idx+1]]    
+        x = feature_emb[:,0]
+        y = feature_emb[:,1]
+        c = cmap(idx)
+        ann = cat_emb.categories_[idx]
+        plt.scatter(x,y,  color=c, label=feature)
+
+        if annotation:
+            for i in range(len(x)):
+                plt.annotate(ann[i], (x[i]+0.05, y[i] + 0))
+
+    plt.legend()
+    plt.show()        
