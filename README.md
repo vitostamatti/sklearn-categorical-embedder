@@ -16,7 +16,10 @@
 
 ## About <a name = "about"></a>
 
-...
+A scikit-learn transformer to encode categorical features into vectors of a given size.
+
+It uses the multi-layer perceptron of sklearn to extract embeddings.
+
 
 ## Setup <a name = "setup"></a>
 
@@ -46,8 +49,9 @@ ce.transform(X)
 ## TODOS
 
 - [X] First commit.
+- [X] Example Notebooks
 - [ ] Complete docstrings
-- [ ] Example Notebooks
+
 
 
 ## License
