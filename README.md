@@ -24,7 +24,7 @@ To get started, clone this repo and check that you have all requirements install
 
 ```
 git clone https://github.com/vitostamatti/sklearn-categorical-embedder.git
-pip install ./sklearn-categorical-embedder/
+pip install ./sklearn-categorical-embedder
 ``` 
 
 ## Usage <a name = "usage"></a>
