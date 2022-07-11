@@ -29,8 +29,18 @@ pip install ./sklearn-categorical-embedder
 
 ## Usage <a name = "usage"></a>
 
-In the [notebooks](/notebooks/) directory you can find examples of
-usage for each object in this repo.
+In the [notebooks](/notebooks/) directory you can find examples of usage.
+
+```
+from categorical_embedder import CategoricalEmbedder
+
+ce = CategoricalEmbedder(emb_size=32, random_state=123)
+
+ce.fit(X,y)
+
+ce.transform(X)
+```
+
 
 
 ## TODOS
