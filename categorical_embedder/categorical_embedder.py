@@ -5,10 +5,52 @@ from sklearn.preprocessing import OrdinalEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.neural_network import MLPClassifier
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 
+
 class CategoricalEmbedder(TransformerMixin, BaseEstimator):
+    """Transformer to encode categorical features into vectors of a given size.
+    
+    On the fit() method computes the following steps:
+
+        1-It uses OrdinalEncoder to convert categories into indexes, adding one
+        extra category for unknown or nan values.
+
+        2-t adds an offset to each category index to identify all possible
+        values of all features with on specific value.
+
+        3-It uses a OneHotEncoder and adds a constant to each feature column.
+
+        4-It uses the multi-layer perceptron of sklearn to extract embeddings from
+        one hot transformed input.
+
+    On the transform() method computes the following steps:
+
+        1-It uses the fitted OrdinalEncoder to get the indexes of the inputs
+
+        2-Uses np.take to get specific feature values embeddings from the embedding matrix.
+
+        3-Reshapes the embeddins in a vector of shape=(n_observations,n_features*emb_size)
+
+    Args:
+        emb_size (int, optional): size of the embedding for each unique category. Defaults to 32.
+        max_iter (int, optional): max iteration of the MLP. Defaults to 100.
+        random_state (_type_, optional): random state. Defaults to None.
+        verbose (bool, optional): True or False. Defaults to False.
+        missing_values (_type_, optional): Defaults to np.nan.
+        copy (bool, optional): Defaults to True.
+
+
+    Attributes:
+        ordinal_encoder_: _description_
+        cardinalities_: _description_
+        offset_: _description_
+        onehot_encoder_: _description_
+        categories_: _description_
+        mlp_: _description_
+        emb_: _description_
+    """ 
+
 
     def __init__(
             self,
@@ -19,6 +61,7 @@ class CategoricalEmbedder(TransformerMixin, BaseEstimator):
             missing_values=np.nan, 
             copy=True
         ):
+
 
         self.emb_size = emb_size
         self.max_iter = max_iter

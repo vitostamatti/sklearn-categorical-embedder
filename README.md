@@ -18,8 +18,27 @@
 
 A scikit-learn transformer to encode categorical features into vectors of a given size.
 
-It uses the multi-layer perceptron of sklearn to extract embeddings.
 
+On the ``fit()`` method computes the following steps:
+
+1-It uses ``OrdinalEncoder`` to convert categories into indexes, adding one
+extra category for unknown or nan values.
+
+2-t adds an offset to each category index to identify all possible
+values of all features with on specific value.
+
+3-It uses a ``OneHotEncoder`` and adds a constant to each feature column.
+
+4-It uses the ``MLPClassifier`` of sklearn to extract embeddings from
+one hotted input.
+
+On the ``transform()`` method computes the following steps:
+
+1-It uses the fitted OrdinalEncoder to get the indexes of the inputs
+
+2-Uses ``np.take`` to get specific feature values embeddings from the embedding matrix.
+
+3-Reshapes the embeddings in a vector of ``shape=(n_observations,n_features*emb_size)``
 
 ## Setup <a name = "setup"></a>
 
