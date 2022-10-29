@@ -44,7 +44,7 @@ On the ``transform()`` method computes the following steps:
 
 To get started, clone this repo and check that you have all requirements installed.
 
-```
+```bash
 git clone https://github.com/vitostamatti/sklearn-categorical-embedder.git
 pip install ./sklearn-categorical-embedder
 ``` 
