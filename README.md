@@ -53,7 +53,7 @@ pip install ./sklearn-categorical-embedder
 
 In the [notebooks](/notebooks/) directory you can find examples of usage.
 
-```
+```python
 from categorical_embedder import CategoricalEmbedder
 
 ce = CategoricalEmbedder(emb_size=32, random_state=123)
